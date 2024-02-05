@@ -21,12 +21,20 @@ class Block:
 
 class Blockchain:
     # difficulty of our PoW algorithm
-    difficulty = 2
+    difficulty = 5
 
     def __init__(self):
         self.unconfirmed_transactions = []
         self.chain = []
         self.create_genesis_block()
+    
+    def print_chain(self):
+        for block in self.chain:
+            print(block.__dict__)
+        print("\n")
+
+    def add_new_transaction(self, transaction):
+        self.unconfirmed_transactions.append(transaction)
 
     def create_genesis_block(self):
         """
@@ -37,6 +45,7 @@ class Blockchain:
         genesis_block = Block(0, [], time.time(), "0")
         genesis_block.hash = genesis_block.compute_hash()
         self.chain.append(genesis_block)
+
 
     @property
     def last_block(self):
@@ -84,8 +93,6 @@ class Blockchain:
 
         return computed_hash
 
-    def add_new_transaction(self, transaction):
-        self.unconfirmed_transactions.append(transaction)
 
     def mine(self):
         """
@@ -109,10 +116,6 @@ class Blockchain:
         self.unconfirmed_transactions = []
         return new_block.index
     
-    def print_chain(self):
-        for block in self.chain:
-            print(block.__dict__)
-        print("\n")
 
 
 #==============================================================================
